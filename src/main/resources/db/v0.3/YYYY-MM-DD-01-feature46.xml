@@ -1,0 +1,20 @@
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog 
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/pro 
+                        http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">  
+    <changeSet author="developer-3" id="addColumn-01"  labels="feature46">  
+        <addColumn  tableName="person">  
+            <column  name="username"  type="varchar(8)"/>  
+        </addColumn>  
+    </changeSet>  
+    
+    <changeSet author="developer-4" id="addLookupTable-02" labels="feature46">  
+        <addLookupTable  
+            existingTableName="person"  existingColumnName="state"  
+            newTableName="state"  newColumnName="id"  newColumnDataType="char(2)"/>  
+    </changeSet> 
+</databaseChangeLog>

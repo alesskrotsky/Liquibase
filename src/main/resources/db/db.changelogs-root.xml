@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog 
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog 
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/pro 
+                        http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+    <!-- Should be only links to per-version cumulative changelog files. -->
+    <preConditions>
+      <dbms  type="postgresql"/>
+      <runningAs  username="postgres"/>
+    </preConditions>
+    <include file="v0.1/cumulative-changelog.xml" relativeToChangelogFile="true"/>
+    <include file="v0.2/cumulative-changelog.xml" relativeToChangelogFile="true"/>
+    <include file="v0.3/cumulative-changelog.xml" relativeToChangelogFile="true"/>
+</databaseChangeLog>

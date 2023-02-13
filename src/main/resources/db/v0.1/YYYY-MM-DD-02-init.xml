@@ -1,0 +1,20 @@
+<databaseChangeLog 
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog 
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/pro 
+                        http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+    <changeSet author="developer-1" id="addFK-01" labels="init">
+        <comment> Create a ForeignKey named "country_capital_fkey".</comment>
+        <addForeignKeyConstraint baseColumnNames="capital" baseTableName="country" constraintName="country_capital_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="city" validate="true"/>
+    </changeSet>
+
+    <changeSet author="developer-1" id="addFK-02" labels="init">
+        <comment> Create a ForeignKey named "countrylanguage_countrycode_fkey".</comment>
+        <addForeignKeyConstraint baseColumnNames="countrycode" baseTableName="countrylanguage" constraintName="countrylanguage_countrycode_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="code" referencedTableName="country" validate="true"/>
+    </changeSet>
+
+</databaseChangeLog>

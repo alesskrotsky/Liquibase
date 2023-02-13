@@ -1,0 +1,22 @@
+<databaseChangeLog 
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog 
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/pro 
+                        http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+    <!-- Should be only links changeSets for version 0.1 -->  
+    <include file="YYYY-MM-DD-01-init.xml" relativeToChangelogFile="true" />
+    
+    <changeSet  author="releaseTag" id="tagDatabaseVersion-0.1-1"> 
+        <tagDatabase tag="0.1-1"/>      
+    </changeSet>
+
+    <include file="YYYY-MM-DD-02-init.xml" relativeToChangelogFile="true" /> 
+    
+    <changeSet  author="releaseTag"  id="tagDatabaseVersion-0.1-2"> 
+        <tagDatabase  tag="0.1-2"/>      
+    </changeSet>
+    
+</databaseChangeLog>
