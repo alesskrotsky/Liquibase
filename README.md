@@ -7,6 +7,44 @@ Tere are two postgres services for local environmet:
     `postgres-live` - use bootstrap script to emulate a non-empty database. Listening port is ${.env.POSTGRES_PORT_LIVE} 
     `postgres-dev`  - boot as an empty database. Listening port is ${.env.POSTGRES_PORT_DEV} 
 
+
+## Database Refactor Structure
+----
+All  schema changes have a nested structure and are grouped in a common file db.changelogs-root.xml file.
+
+```
+└── src
+    ├── healthchecks
+    │   └── postgres.sh
+    └── main
+        └── resources
+            └── db
+                ├── db.changelogs-root.xml
+                ├── seed
+                │   └── init_database_v1.sh
+                ├── v0.1
+                │   ├── YYYY-MM-DD-01-changelog.xml
+                │   ├── YYYY-MM-DD-N-changelog.xml
+                │   └── cumulative-changelog.xml
+                ├── v0.2
+                │   ├── YYYY-MM-DD-01-changelog.xml
+                |   ├── YYYY-MM-DD-N-changelog.xml
+                │   └── cumulative-changelog.xml
+                └── v0.3
+                    ├── YYYY-MM-DD-01-changelog.xml
+                    ├── YYYY-MM-DD-N-changelog.xml
+                    └── cumulative-changelog.xml
+```
+
+
+## Cases Study
+- Setting up and connecting to the database using Liquibase CLI
+- Sync already deploy changes on `postgres-live` 
+- Update and rollback to specific tag 
+- Generate a changeset execution report
+- Add and rollout new changes
+
+
 ## Prerequisites
 ----
 1. Install JDK 1.8
@@ -47,6 +85,8 @@ Tere are two postgres services for local environmet:
 
 ### Command examples:
 ----
+Liquibase command syntax: `liquibase [GLOBAL OPTIONS] [COMMAND] [COMMAND OPTIONS]`
+
 To validate the changelog for errors:
 
     liquibase --defaults-file=local.liquibase.properties validate
@@ -66,43 +106,6 @@ To tag a database based on the project pom version:
 To rollback sqls till a tag version:
 
 	liquibase --defaults-file=local.liquibase.properties rollback --tag=${TAG_NUMBER}
-
-
-## Database Refactor Structure
-----
-All  schema changes have a nested structure and are grouped in a common file db.changelogs-root.xml file.
-
-```
-└── src
-    ├── healthchecks
-    │   └── postgres.sh
-    └── main
-        └── resources
-            └── db
-                ├── db.changelogs-root.xml
-                ├── seed
-                │   └── init_database_v1.sh
-                ├── v0.1
-                │   ├── YYYY-MM-DD-01-changelog.xml
-                │   ├── YYYY-MM-DD-N-changelog.xml
-                │   └── cumulative-changelog.xml
-                ├── v0.2
-                │   ├── YYYY-MM-DD-01-changelog.xml
-                |   ├── YYYY-MM-DD-N-changelog.xml
-                │   └── cumulative-changelog.xml
-                └── v0.3
-                    ├── YYYY-MM-DD-01-changelog.xml
-                    ├── YYYY-MM-DD-N-changelog.xml
-                    └── cumulative-changelog.xml
-```
-
-
-## Cases Study
-- Setting up and connecting to the database using Liquibase CLI
-- Sync already deploy changes on `postgres-live` 
-- Update and rollback to specific tag 
-- Generate a changeset execution report
-- Add and rollout new changes
 
 
 ## Reference

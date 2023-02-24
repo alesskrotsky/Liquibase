@@ -54,11 +54,11 @@ pipeline {
           else if (env.action == 'update-to-tag') {
             echo "------liquibase update-to-tag------"
             sh 'liquibase --defaults-file=liquibase.properties --url="jdbc:postgresql://host.docker.internal:${DB_ENV}/${POSTGRES_DB}" --username=${POSTGRES_USER} --password=${POSTGRES_PASSWORD}  --driver=${LIQUIBASE_DRIVER} tag ${BUILD_NUMBER}'
-            sh 'liquibase --defaults-file=liquibase.properties --url="jdbc:postgresql://host.docker.internal:${DB_ENV}/${POSTGRES_DB}" --username=${POSTGRES_USER} --password=${POSTGRES_PASSWORD}  --driver=${LIQUIBASE_DRIVER} update-to-tag ${DB_VERSION}'
+            sh 'liquibase --defaults-file=liquibase.properties --url="jdbc:postgresql://host.docker.internal:${DB_ENV}/${POSTGRES_DB}" --username=${POSTGRES_USER} --password=${POSTGRES_PASSWORD}  --driver=${LIQUIBASE_DRIVER} update-to-tag "${DB_VERSION}"'
           }
           else if (env.action == 'rollback') {
             echo "------liquibase rollback-to-tag------"
-            sh 'liquibase --defaults-file=liquibase.properties --url="jdbc:postgresql://host.docker.internal:${DB_ENV}/${POSTGRES_DB}" --username=${POSTGRES_USER} --password=${POSTGRES_PASSWORD}  --driver=${LIQUIBASE_DRIVER} rollback --tag=${DB_VERSION}' 
+            sh 'liquibase --defaults-file=liquibase.properties --url="jdbc:postgresql://host.docker.internal:${DB_ENV}/${POSTGRES_DB}" --username=${POSTGRES_USER} --password=${POSTGRES_PASSWORD}  --driver=${LIQUIBASE_DRIVER} rollback --tag="${DB_VERSION}"' 
           }
           else {
             echo "------liquibase dry-run------"
