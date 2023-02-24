@@ -22,15 +22,15 @@ All  schema changes have a nested structure and are grouped in a common file db.
                 ├── db.changelogs-root.xml
                 ├── seed
                 │   └── init_database_v1.sh
-                ├── v0.1
+                ├── v1.0
                 │   ├── YYYY-MM-DD-01-changelog.xml
                 │   ├── YYYY-MM-DD-N-changelog.xml
                 │   └── cumulative-changelog.xml
-                ├── v0.2
+                ├── v2.0
                 │   ├── YYYY-MM-DD-01-changelog.xml
                 |   ├── YYYY-MM-DD-N-changelog.xml
                 │   └── cumulative-changelog.xml
-                └── v0.3
+                └── v3.0
                     ├── YYYY-MM-DD-01-changelog.xml
                     ├── YYYY-MM-DD-N-changelog.xml
                     └── cumulative-changelog.xml
