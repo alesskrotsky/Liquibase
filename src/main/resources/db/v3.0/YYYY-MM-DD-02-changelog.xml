@@ -1,0 +1,38 @@
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog 
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/pro 
+                        http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">  
+
+    <changeSet author="developer-1" id="21237541914-01"  labels="feature46">  
+        <createProcedure>
+            CREATE OR REPLACE FUNCTION change_update_time() RETURNS trigger
+            LANGUAGE plpgsql
+            AS $$
+            BEGIN
+            NEW.updated_at := CURRENT_TIMESTAMP;
+            RETURN NEW;
+            END;
+            $$;
+        </createProcedure>
+        <rollback>
+            DROP FUNCTION change_update_time();
+        </rollback>
+    </changeSet>  
+
+    <changeSet author="developer-1" id="21237541914-02"  labels="feature46">  
+        <sql endDelimiter=";">
+            DROP TRIGGER IF EXISTS add_current_date_to_my_table ON testtable1;
+            CREATE TRIGGER add_current_date_to_my_table BEFORE UPDATE ON testtable1 FOR EACH ROW EXECUTE PROCEDURE change_update_time();
+        </sql>
+        <rollback>
+            <sql endDelimiter=";">
+                DROP TRIGGER add_current_date_to_my_table ON testtable1;
+            </sql>
+        </rollback>
+    </changeSet>  
+    
+</databaseChangeLog>

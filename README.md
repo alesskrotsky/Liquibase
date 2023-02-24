@@ -21,29 +21,23 @@ All  schema changes have a nested structure and are grouped in a common file db.
             └── db
                 ├── db.changelogs-root.xml
                 ├── seed
-                │   └── init_database_v1.sh
-                ├── v0.1
+                │   ├── city.csv
+                │   ├── country.csv
+                │   ├── countrylanguage.csv
+                │   └── init_database_v1.sh
+                ├── v1.0
                 │   ├── YYYY-MM-DD-01-changelog.xml
                 │   ├── YYYY-MM-DD-N-changelog.xml
                 │   └── cumulative-changelog.xml
-                ├── v0.2
+                ├── v2.0
                 │   ├── YYYY-MM-DD-01-changelog.xml
                 |   ├── YYYY-MM-DD-N-changelog.xml
                 │   └── cumulative-changelog.xml
-                └── v0.3
+                └── v3.0
                     ├── YYYY-MM-DD-01-changelog.xml
                     ├── YYYY-MM-DD-N-changelog.xml
                     └── cumulative-changelog.xml
 ```
-
-
-## Cases Study
-- Setting up and connecting to the database using Liquibase CLI
-- Sync already deploy changes on `postgres-live` 
-- Update and rollback to specific tag 
-- Generate a changeset execution report
-- Add and rollout new changes
-
 
 ## Prerequisites
 ----
@@ -60,7 +54,7 @@ All  schema changes have a nested structure and are grouped in a common file db.
 2. Run postgres db servises: `docker-compose up -d`
 
     ```
-    ❯ docker ps --format '{{ .Image }}\t{{ .Status }}\t{{ .Ports }}\t{{ .Names }}'
+    ❯ docker ps --format '{{ .Image }}\t{{ .Status }}\t{{ .Ports }}\t{{ .Names }}' | grep postgres-
         postgres:15-alpine	Up (healthy)	0.0.0.0:5432->5432/tcp	postgres-live
         postgres:15-alpine	Up (healthy)	0.0.0.0:5430->5432/tcp	postgres-dev
     ```
@@ -70,7 +64,7 @@ All  schema changes have a nested structure and are grouped in a common file db.
 ## Liquibase CLI profile preparation
 ----
 1. Jump to project dir: `cd ${PROJECT_PATH}`
-2. Create file _local.liquibase.properties_ with correct values.
+2. Create file _<env>.liquibase.properties_ with correct values.
     ```
     liquibase.hub.mode:off
     liquibase.searchPath: ./src/main/resources/db/
@@ -82,6 +76,31 @@ All  schema changes have a nested structure and are grouped in a common file db.
     password: ${.env.POSTGRES_PASSWORD}
     ```
 
+## Cases Study
+### Set up Liquibase CLI for connecting to the database with profile
+
+    >touch dev.liquibase.properties
+    >touch live.liquibase.properties
+
+### Test connecting to `postgres-dev` and `postgres-live` 
+    liquibase --defaults-file=dev.liquibase.properties status --contexts="dev"
+    liquibase --defaults-file=live.liquibase.properties status --contexts="live"
+
+### Update and rollback to specific version of db migration. Update up to __v1.2__ then rollback to __v1.1__
+    liquibase --defaults-file=dev.liquibase.properties update-to-tag 1.2 --contexts="dev"
+    liquibase --defaults-file=dev.liquibase.properties history
+    liquibase --defaults-file=dev.liquibase.properties rollback --tag=1.1 --contexts="dev"
+    liquibase --defaults-file=dev.liquibase.properties history
+
+### Apply all new changes on `postgres-dev`. Update up to __v3.1__
+    liquibase --defaults-file=dev.liquibase.properties update --contexts="dev"
+    liquibase --defaults-file=dev.liquibase.properties status --contexts="dev"
+
+### Sync already deploy changes and Add all new changes on `postgres-live`
+    liquibase --defaults-file=live.liquibase.properties update --contexts="live"
+    liquibase --defaults-file=dev.liquibase.properties history --contexts="live"
+
+
 
 ### Command examples:
 ----
@@ -89,23 +108,31 @@ Liquibase command syntax: `liquibase [GLOBAL OPTIONS] [COMMAND] [COMMAND OPTIONS
 
 To validate the changelog for errors:
 
-    liquibase --defaults-file=local.liquibase.properties validate
+    liquibase --defaults-file=liquibase.properties validate
 
 To execute dry-run:
 
-	liquibase --defaults-file=local.liquibase.properties update-sql
+	liquibase --defaults-file=liquibase.properties update-sql
 
 To execute changesets:
 
-	liquibase --defaults-file=local.liquibase.properties update
+	liquibase --defaults-file=liquibase.properties update
 
 To tag a database based on the project pom version:
 
-	liquibase --defaults-file=local.liquibase.properties tag ${TAG_NUMBER}
+	liquibase --defaults-file=liquibase.properties tag ${TAG_NUMBER}
 
 To rollback sqls till a tag version:
 
-	liquibase --defaults-file=local.liquibase.properties rollback --tag=${TAG_NUMBER}
+	liquibase --defaults-file=liquibase.properties rollback --tag=${TAG_NUMBER}
+
+To list all deployed changesets and their deployment ID:
+
+	liquibase --defaults-file=liquibase.properties history
+
+To generates html documentation for the existing database and changelogs:
+
+    liquibase --defaults-file=liquibase.properties db-doc changelogDocs
 
 
 ## Reference

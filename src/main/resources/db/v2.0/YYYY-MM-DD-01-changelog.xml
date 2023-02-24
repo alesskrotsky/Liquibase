@@ -7,8 +7,9 @@
                         http://www.liquibase.org/xml/ns/pro 
                         http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
 
-    <changeSet  author="developer-2" id="CreateTable-01" labels="feature10">  
-        <createTable  tableName="person">  
+    <changeSet  author="developer-3" id="8316711915-01" labels="feature10">
+        <comment> Create a table named "testtable1".</comment>  
+        <createTable  tableName="testtable1">  
             <column  name="id"  type="int"  autoIncrement="true">  
                 <constraints  primaryKey="true"  nullable="false"/>  
             </column>  
@@ -17,11 +18,15 @@
                 <constraints  nullable="false"/>  
             </column>  
             <column  name="state"  type="char(2)"/>  
+            <column name="updated_at" type="timestamp without time zone" defaultValue="now()">
+                <constraints nullable="false"/>
+            </column>
         </createTable>  
     </changeSet>
 
-    <changeSet author="developer-3" id="CreateTable-02" labels="feature10">
-        <createTable tableName="departments">
+    <changeSet author="developer-3" id="8316711915-02" labels="feature10">
+        <comment> Create a table named "testtable2".</comment>
+        <createTable tableName="testtable2">
             <column name="id" type="int">
                 <constraints primaryKey="true" nullable="false"/>
             </column>

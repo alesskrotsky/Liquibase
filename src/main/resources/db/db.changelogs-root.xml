@@ -12,7 +12,7 @@
       <dbms  type="postgresql"/>
       <runningAs  username="postgres"/>
     </preConditions>
-    <include file="v0.1/cumulative-changelog.xml" relativeToChangelogFile="true"/>
-    <include file="v0.2/cumulative-changelog.xml" relativeToChangelogFile="true"/>
-    <include file="v0.3/cumulative-changelog.xml" relativeToChangelogFile="true"/>
+    <include file="v1.0/cumulative-changelog.xml" relativeToChangelogFile="true"/>
+    <include file="v2.0/cumulative-changelog.xml" relativeToChangelogFile="true"/>
+    <include file="v3.0/cumulative-changelog.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

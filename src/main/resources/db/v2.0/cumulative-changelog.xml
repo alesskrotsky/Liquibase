@@ -6,12 +6,13 @@
                         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
                         http://www.liquibase.org/xml/ns/pro 
                         http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
-    <!-- Should be only links changeSets for version 0.2 -->
+    <!-- Should be only links changeSets for version 2.0 -->
 
-    <include file="YYYY-MM-DD-01-feature10.xml" relativeToChangelogFile="true" />
+    <include file="YYYY-MM-DD-01-changelog.xml" relativeToChangelogFile="true" />
+    <include file="YYYY-MM-DD-02-changelog.xml" relativeToChangelogFile="true" />
 
-    <changeSet  author="releaseTag" id="tagDatabaseVersion-0.2-1">  
-        <tagDatabase  tag="0.2-1"/>  
+    <changeSet  author="releaseTag" id="tagDatabaseVersion-2.1">  
+        <tagDatabase  tag="2.1"/>  
     </changeSet>
 
 </databaseChangeLog>

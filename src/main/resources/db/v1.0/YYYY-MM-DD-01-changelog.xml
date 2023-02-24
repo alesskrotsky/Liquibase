@@ -1,0 +1,240 @@
+<databaseChangeLog 
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog 
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/pro 
+                        http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+    <changeSet author="developer-1" id="3392374952-01" labels="init">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="city"/>
+            </not>
+        </preConditions>
+        <comment> Create a table named "city".</comment>
+        <createTable tableName="city">
+            <column name="id" type="INTEGER">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="city_pkey"/>
+            </column>
+            <column name="name" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="countrycode" type="CHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="district" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="population" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="qa-1" id="3392374952-01" labels="testdata" contextFilter="dev">
+        <preConditions onFail="WARN">
+            <and>
+                <tableExists tableName="city"/>
+                <columnExists tableName="city" columnName="id" />
+                <columnExists tableName="city" columnName="name" />
+                <columnExists tableName="city" columnName="countrycode" />
+                <columnExists tableName="city" columnName="district" />
+                <columnExists tableName="city" columnName="population" />
+            </and>
+        </preConditions>
+        <comment> Loads test data into an existing table "city". Only for dev environment. </comment>
+        <loadUpdateData tableName="city"
+            file="../seed/city.csv"
+            primaryKey="id"
+            separator=","
+            encoding="UTF-8"
+            relativeToChangelogFile="true">
+                <column header="id" name="id" type="INTEGER"/>
+                <column header="name" name="name" type="TEXT"/>
+                <column header="countrycode" name="countrycode" type=" CHAR(3)"/>
+                <column header="district" name="district" type="TEXT"/>
+                <column header="population" name="population" type="INTEGER"/>
+        </loadUpdateData>
+    </changeSet>
+
+    <changeSet author="developer-1" id="3392374952-02" labels="init">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="country"/>
+            </not>
+        </preConditions>
+        <comment> Create a table named "country".</comment>
+        <createTable tableName="country">
+            <column name="code" type="CHAR(3)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="country_pkey"/>
+            </column>
+            <column name="name" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="continent" type="TEXT">
+                <constraints nullable="false" checkConstraint="" />
+            </column>
+            <column name="region" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="surfacearea" type="FLOAT4">
+                <constraints nullable="false"/>
+            </column>
+            <column name="indepyear" type="SMALLINT"/>
+            <column name="population" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lifeexpectancy" type="FLOAT4"/>
+            <column name="gnp" type="numeric(10, 2)"/>
+            <column name="gnpold" type="numeric(10, 2)"/>
+            <column name="localname" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="governmentform" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="headofstate" type="TEXT"/>
+            <column name="capital" type="INTEGER"/>
+            <column name="code2" type="CHAR(2)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="developer-1" id="3392374952-03" labels="init">
+        <preConditions onFail="MARK_RAN">
+                <sqlCheck expectedResult="0">
+                    SELECT count(1) 
+                    FROM information_schema.check_constraints 
+                    WHERE constraint_name = 'country_continent_check'
+                </sqlCheck>
+        </preConditions>
+        <comment> Add Check Constraint for "country" table.</comment>
+        <sql endDelimiter=";">
+            ALTER TABLE country ADD CONSTRAINT country_continent_check CHECK (continent in ('Asia','Europe','North America','Africa','Oceania','Antarctica','South America')) ;
+        </sql>
+        <rollback>
+            <sql endDelimiter=";">
+                ALTER TABLE country DROP CONSTRAINT country_continent_check ;
+            </sql>
+        </rollback>            
+    </changeSet>
+
+    <changeSet author="qa-1" id="729064972-02" labels="testdata" contextFilter="dev">
+        <preConditions onFail="WARN">
+            <and>
+                <tableExists tableName="country"/>
+                <columnExists tableName="country" columnName="code" />
+                <columnExists tableName="country" columnName="name" />
+                <columnExists tableName="country" columnName="continent" />
+                <columnExists tableName="country" columnName="region" />
+                <columnExists tableName="country" columnName="surfacearea" />
+                <columnExists tableName="country" columnName="indepyear" />
+                <columnExists tableName="country" columnName="population" />
+                <columnExists tableName="country" columnName="lifeexpectancy" />
+                <columnExists tableName="country" columnName="gnp" />
+                <columnExists tableName="country" columnName="gnpold" />
+                <columnExists tableName="country" columnName="localname" />
+                <columnExists tableName="country" columnName="governmentform" />
+                <columnExists tableName="country" columnName="headofstate" />
+                <columnExists tableName="country" columnName="capital" />
+                <columnExists tableName="country" columnName="code2" />
+            </and>
+        </preConditions>
+        <comment> Loads test data into an existing table "country". Only for dev environment. </comment>
+        <loadUpdateData tableName="country"
+            file="../seed/country.csv"
+            primaryKey="code"
+            separator=","
+            encoding="UTF-8"
+            relativeToChangelogFile="true">
+                <column header="code" name="code" type="CHAR(3)"/>
+                <column header="name" name="name" type="TEXT"/>
+                <column header="continent" name="continent" type="TEXT"/>
+                <column header="region" name="region" type="TEXT"/>
+                <column header="surfacearea" name="surfacearea" type="FLOAT4"/>
+                <column header="indepyear" name="indepyear" type="SMALLINT"/>
+                <column header="population" name="population" type="INTEGER"/>
+                <column header="lifeexpectancy" name="lifeexpectancy" type="FLOAT4"/>
+                <column header="gnp" name="gnp" type="numeric(10, 2)"/>
+                <column header="gnpold" name="gnpold" type="numeric(10, 2)"/>
+                <column header="localname" name="localname" type="TEXT"/>
+                <column header="governmentform" name="governmentform" type="TEXT"/>
+                <column header="headofstate" name="headofstate" type=""/>
+                <column header="capital" name="capital" type="INTEGER"/>
+                <column header="code2" name="code2" type="CHAR(2)"/>
+        </loadUpdateData>
+    </changeSet>    
+
+    <changeSet author="developer-1" id="3392374952-04" labels="init">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="countrylanguage"/>
+            </not>
+        </preConditions>
+        <comment> Create a table named "countrylanguage".</comment>
+        <createTable tableName="countrylanguage">
+            <column name="countrycode" type="CHAR(3)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="countrylanguage_pkey"/>
+            </column>
+            <column name="language" type="TEXT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="countrylanguage_pkey"/>
+            </column>
+            <column name="isofficial" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+            <column name="percentage" type="FLOAT4">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="qa-1" id="8412433663-03" labels="testdata" contextFilter="dev">
+        <preConditions onFail="WARN">
+            <and>
+                <tableExists tableName="countrylanguage"/>
+                <columnExists tableName="countrylanguage" columnName="countrycode" />
+                <columnExists tableName="countrylanguage" columnName="language" />
+                <columnExists tableName="countrylanguage" columnName="isofficial" />
+                <columnExists tableName="countrylanguage" columnName="percentage" />
+            </and>
+        </preConditions>
+        <comment> Loads test data into an existing table "countrylanguage". Only for dev environment. </comment>
+        <loadUpdateData tableName="countrylanguage"
+            file="../seed/countrylanguage.csv"
+            primaryKey="countrycode,language"
+            separator=","
+            encoding="UTF-8"
+            relativeToChangelogFile="true">
+                <column header="countrycode" name="countrycode" type="CHAR(3)"/>
+                <column header="language" name="language" type="TEXT"/>
+                <column header="isofficial" name="isofficial" type="BOOLEAN"/>
+                <column header="percentage" name="percentage" type="FLOAT4"/>
+        </loadUpdateData>
+    </changeSet>
+    
+    <changeSet author="developer-1" id="3392374952-05" labels="init">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="country_capital_fkey"
+                            foreignKeyTableName="country" />
+            </not>
+        </preConditions>
+        <comment> Create a ForeignKey named "country_capital_fkey".</comment>
+        <addForeignKeyConstraint baseColumnNames="capital" baseTableName="country" constraintName="country_capital_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="city" validate="true"/>
+    </changeSet>
+
+    <changeSet author="developer-1" id="3392374952-06" labels="init">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="countrylanguage_countrycode_fkey"
+                                            foreignKeyTableName="countrylanguage" />
+            </not>
+        </preConditions>
+        <comment> Create a ForeignKey named "countrylanguage_countrycode_fkey".</comment>
+        <addForeignKeyConstraint baseColumnNames="countrycode" baseTableName="countrylanguage" constraintName="countrylanguage_countrycode_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="code" referencedTableName="country" validate="true"/>
+    </changeSet>
+
+</databaseChangeLog>

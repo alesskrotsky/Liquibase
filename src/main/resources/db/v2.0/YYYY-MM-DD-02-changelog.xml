@@ -1,4 +1,4 @@
-<databaseChangeLog 
+<databaseChangeLog
     xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:pro="http://www.liquibase.org/xml/ns/pro"
@@ -6,12 +6,13 @@
                         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
                         http://www.liquibase.org/xml/ns/pro 
                         http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
-    <!-- Should be only links changeSets for version 0.3 -->
 
-    <include file="YYYY-MM-DD-01-feature46.xml" relativeToChangelogFile="true"/>
-    
-    <changeSet  author="releaseTag" id="tagDatabaseVersion-0.3-1">  
-        <tagDatabase  tag="0.3-1"/>  
+    <changeSet  author="developer-1" id="375579741-01" labels="feature30">
+        <comment> Create a view.</comment>  
+        <createView replaceIfExists="true"
+            viewName="testview">
+            select code, name from country as testview
+        </createView>
     </changeSet>
-  
+
 </databaseChangeLog>

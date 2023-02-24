@@ -1,0 +1,24 @@
+<databaseChangeLog 
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog 
+                        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/pro 
+                        http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+    <changeSet author="developer-2" id="2131856357-01" labels="feature4">
+        <comment> Add new column for table "city".</comment>
+        <addColumn tableName="city">
+            <column name="testcolumncity" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet author="developer-2" id="2131856357-02" labels="feature4">
+        <comment> Create new index for "population" column.</comment>
+        <createIndex indexName="test_index" tableName="country">
+            <column name="population"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

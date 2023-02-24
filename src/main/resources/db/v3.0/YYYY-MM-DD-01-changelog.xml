@@ -6,15 +6,10 @@
                         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
                         http://www.liquibase.org/xml/ns/pro 
                         http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">  
-    <changeSet author="developer-3" id="addColumn-01"  labels="feature46">  
-        <addColumn  tableName="person">  
+    <changeSet author="developer-4" id="5471688828-01"  labels="feature40">  
+        <addColumn  tableName="testtable2">  
             <column  name="username"  type="varchar(8)"/>  
         </addColumn>  
     </changeSet>  
     
-    <changeSet author="developer-4" id="addLookupTable-02" labels="feature46">  
-        <addLookupTable  
-            existingTableName="person"  existingColumnName="state"  
-            newTableName="state"  newColumnName="id"  newColumnDataType="char(2)"/>  
-    </changeSet> 
 </databaseChangeLog>
