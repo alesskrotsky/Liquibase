@@ -50,13 +50,11 @@ pipeline {
         script {
           if (env.action == 'update') {
             echo "------liquibase update------"
-            sh "liquibase --defaults-file=liquibase.properties --url=$DB_URL --username=$POSTGRES_USER --password=$POSTGRES_PASSWORD --driver=$LIQUIBASE_DRIVER tag $BUILD_NUMBER"
             sh "liquibase --defaults-file=liquibase.properties --url=$DB_URL --username=$POSTGRES_USER --password=$POSTGRES_PASSWORD --driver=$LIQUIBASE_DRIVER update-sql"
             sh "liquibase --defaults-file=liquibase.properties --url=$DB_URL --username=$POSTGRES_USER --password=$POSTGRES_PASSWORD --driver=$LIQUIBASE_DRIVER update"
           }
           else if (env.action == 'update-to-tag') {
             echo "------liquibase update-to-tag------"
-            sh "liquibase --defaults-file=liquibase.properties --url=$DB_URL --username=$POSTGRES_USER --password=$POSTGRES_PASSWORD --driver=$LIQUIBASE_DRIVER tag $BUILD_NUMBER"
             sh "liquibase --defaults-file=liquibase.properties --url=$DB_URL --username=$POSTGRES_USER --password=$POSTGRES_PASSWORD --driver=$LIQUIBASE_DRIVER update-to-tag-sql $DB_VERSION"
             sh "liquibase --defaults-file=liquibase.properties --url=$DB_URL --username=$POSTGRES_USER --password=$POSTGRES_PASSWORD --driver=$LIQUIBASE_DRIVER update-to-tag $DB_VERSION"
           }
