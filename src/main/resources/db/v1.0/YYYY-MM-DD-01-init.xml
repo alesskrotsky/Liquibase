@@ -85,18 +85,15 @@
             </not>
         </preConditions>
         <comment> Add Check Constraint for "country" table.</comment>
-        <sql endDelimiter="\nGO">
-            ALTER TABLE country ADD CONSTRAINT country_continent_check CHECK (continent in ('Asia','Europe','North America','Africa','Oceania','Antarctica','South America'))
+        <sql endDelimiter=";">
+            ALTER TABLE country ADD CONSTRAINT country_continent_check CHECK (continent in ('Asia','Europe','North America','Africa','Oceania','Antarctica','South America')) ;
         </sql>
         <rollback>
-            <sql endDelimiter="\nGO">
-                ALTER TABLE country DROP CONSTRAINT country_continent_check
+            <sql endDelimiter=";">
+                ALTER TABLE country DROP CONSTRAINT country_continent_check ;
             </sql>
-        </rollback>
-            
+        </rollback>            
     </changeSet>
-
-
 
 
     <changeSet author="developer-1" id="CreateTable-04" labels="init">
