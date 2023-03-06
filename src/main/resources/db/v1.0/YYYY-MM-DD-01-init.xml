@@ -48,7 +48,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="continent" type="TEXT">
-                <constraints nullable="false"/>
+                <constraints nullable="false" checkConstraint="" />
             </column>
             <column name="region" type="TEXT">
                 <constraints nullable="false"/>
@@ -80,7 +80,29 @@
     <changeSet author="developer-1" id="CreateTable-03" labels="init">
         <preConditions onFail="MARK_RAN">
             <not>
-                <tableExists tableName="country"/>
+                <uniqueConstraintExists constraintName="country_continent_check"
+                                        tableName="country"/>
+            </not>
+        </preConditions>
+        <comment> Add Check Constraint for "country" table.</comment>
+        <sql endDelimiter="\nGO">
+            ALTER TABLE country ADD CONSTRAINT country_continent_check CHECK (continent in ('Asia','Europe','North America','Africa','Oceania','Antarctica','South America'))
+        </sql>
+        <rollback>
+            <sql endDelimiter="\nGO">
+                ALTER TABLE country DROP CONSTRAINT country_continent_check
+            </sql>
+        </rollback>
+            
+    </changeSet>
+
+
+
+
+    <changeSet author="developer-1" id="CreateTable-04" labels="init">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="countrylanguage"/>
             </not>
         </preConditions>
         <comment> Create a table named "countrylanguage".</comment>
