@@ -60,7 +60,7 @@ All  schema changes have a nested structure and are grouped in a common file db.
 2. Run postgres db servises: `docker-compose up -d`
 
     ```
-    ❯ docker ps --format '{{ .Image }}\t{{ .Status }}\t{{ .Ports }}\t{{ .Names }}'
+    ❯ docker ps --format '{{ .Image }}\t{{ .Status }}\t{{ .Ports }}\t{{ .Names }}' | grep postgres-
         postgres:15-alpine	Up (healthy)	0.0.0.0:5432->5432/tcp	postgres-live
         postgres:15-alpine	Up (healthy)	0.0.0.0:5430->5432/tcp	postgres-dev
     ```
