@@ -77,7 +77,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="developer-1" id="3392374952-03" labels="init">
+    <!-- <changeSet author="developer-1" id="3392374952-03" labels="init">
         <preConditions onFail="MARK_RAN">
             <not>
                 <uniqueConstraintExists constraintName="country_continent_check"
@@ -93,7 +93,7 @@
                 ALTER TABLE country DROP CONSTRAINT country_continent_check ;
             </sql>
         </rollback>            
-    </changeSet>
+    </changeSet> -->
 
 
     <changeSet author="developer-1" id="3392374952-04" labels="init">
