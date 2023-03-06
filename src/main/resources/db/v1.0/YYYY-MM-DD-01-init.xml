@@ -97,7 +97,7 @@
 
 
     <changeSet author="developer-1" id="3392374952-04" labels="init">
-        <preConditions onFail="MARK_RAN">
+        <preConditions onFail="CONTINUE">
             <not>
                 <tableExists tableName="countrylanguage"/>
             </not>
