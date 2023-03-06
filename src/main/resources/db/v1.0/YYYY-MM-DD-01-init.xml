@@ -8,6 +8,11 @@
                         http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
 
     <changeSet author="developer-1" id="CreateTable-01" labels="init">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="city"/>
+            </not>
+        </preConditions>
         <comment> Create a table named "city".</comment>
         <createTable tableName="city">
             <column name="id" type="INTEGER">
@@ -29,6 +34,11 @@
     </changeSet>
 
     <changeSet author="developer-1" id="CreateTable-02" labels="init">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="country"/>
+            </not>
+        </preConditions>
         <comment> Create a table named "country".</comment>
         <createTable tableName="country">
             <column name="code" type="CHAR(3)">
@@ -68,6 +78,11 @@
     </changeSet>
 
     <changeSet author="developer-1" id="CreateTable-03" labels="init">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="country"/>
+            </not>
+        </preConditions>
         <comment> Create a table named "countrylanguage".</comment>
         <createTable tableName="countrylanguage">
             <column name="countrycode" type="CHAR(3)">
@@ -84,5 +99,4 @@
             </column>
         </createTable>
     </changeSet>    
-
 </databaseChangeLog>

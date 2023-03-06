@@ -107,6 +107,10 @@ To rollback sqls till a tag version:
 
 	liquibase --defaults-file=local.liquibase.properties rollback --tag=${TAG_NUMBER}
 
+Marks all undeployed changesets as executed up to tag:
+
+    liquibase --defaults-file=local.liquibase.properties changelog-sync-to-tag ${TAG_NUMBER}
+
 
 ## Reference
 ----
