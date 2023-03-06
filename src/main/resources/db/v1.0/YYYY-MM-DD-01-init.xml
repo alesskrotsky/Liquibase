@@ -7,7 +7,7 @@
                         http://www.liquibase.org/xml/ns/pro 
                         http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
 
-    <changeSet author="developer-1" id="CreateTable-01" labels="init">
+    <changeSet author="developer-1" id="3392374952-01" labels="init">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="city"/>
@@ -33,7 +33,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="developer-1" id="CreateTable-02" labels="init">
+    <changeSet author="developer-1" id="3392374952-02" labels="init">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="country"/>
@@ -77,7 +77,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet author="developer-1" id="CreateTable-03" labels="init">
+    <changeSet author="developer-1" id="3392374952-03" labels="init">
         <preConditions onFail="MARK_RAN">
             <not>
                 <uniqueConstraintExists constraintName="country_continent_check"
@@ -96,7 +96,7 @@
     </changeSet>
 
 
-    <changeSet author="developer-1" id="CreateTable-04" labels="init">
+    <changeSet author="developer-1" id="3392374952-04" labels="init">
         <preConditions onFail="MARK_RAN">
             <not>
                 <tableExists tableName="countrylanguage"/>
@@ -117,5 +117,28 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-    </changeSet>    
+    </changeSet>
+    
+    <changeSet author="developer-1" id="3392374952-05" labels="init">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="country_capital_fkey"
+                            foreignKeyTableName="country" />
+            </not>
+        </preConditions>
+        <comment> Create a ForeignKey named "country_capital_fkey".</comment>
+        <addForeignKeyConstraint baseColumnNames="capital" baseTableName="country" constraintName="country_capital_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="city" validate="true"/>
+    </changeSet>
+
+    <changeSet author="developer-1" id="3392374952-06" labels="init">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <foreignKeyConstraintExists foreignKeyName="countrylanguage_countrycode_fkey"
+                                            foreignKeyTableName="countrylanguage" />
+            </not>
+        </preConditions>
+        <comment> Create a ForeignKey named "countrylanguage_countrycode_fkey".</comment>
+        <addForeignKeyConstraint baseColumnNames="countrycode" baseTableName="countrylanguage" constraintName="countrylanguage_countrycode_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="code" referencedTableName="country" validate="true"/>
+    </changeSet>
+
 </databaseChangeLog>

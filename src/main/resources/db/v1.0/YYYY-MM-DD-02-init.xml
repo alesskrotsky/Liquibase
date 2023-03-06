@@ -7,26 +7,18 @@
                         http://www.liquibase.org/xml/ns/pro 
                         http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
 
-    <changeSet author="developer-1" id="addFK-01" labels="init">
-        <preConditions onFail="MARK_RAN">
-            <not>
-                <foreignKeyConstraintExists foreignKeyName="country_capital_fkey"
-                            foreignKeyTableName="country" />
-            </not>
-        </preConditions>
-        <comment> Create a ForeignKey named "country_capital_fkey".</comment>
-        <addForeignKeyConstraint baseColumnNames="capital" baseTableName="country" constraintName="country_capital_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="city" validate="true"/>
-    </changeSet>
+<changeSet author="developer-2" id="2131856357-01" labels="update">
+    <comment> Add new column for table "city".</comment>
+    <addColumn tableName="city">
+        <column name="testcolumncity" type="varchar(255)"/>
+    </addColumn>
+</changeSet>
 
-    <changeSet author="developer-1" id="addFK-02" labels="init">
-        <preConditions onFail="MARK_RAN">
-            <not>
-                <foreignKeyConstraintExists foreignKeyName="countrylanguage_countrycode_fkey"
-                            foreignKeyTableName="countrylanguage" />
-            </not>
-        </preConditions>
-        <comment> Create a ForeignKey named "countrylanguage_countrycode_fkey".</comment>
-        <addForeignKeyConstraint baseColumnNames="countrycode" baseTableName="countrylanguage" constraintName="countrylanguage_countrycode_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="code" referencedTableName="country" validate="true"/>
-    </changeSet>
+<changeSet author="developer-2" id="2131856357-02" labels="update">
+    <comment> Create new index for "population" column.</comment>
+    <createIndex indexName="test_index" tableName="country">
+        <column name="population"/>
+    </createIndex>
+</changeSet>
 
 </databaseChangeLog>
