@@ -9,6 +9,7 @@
     <!-- Should be only links changeSets for version 3.0 -->
 
     <include file="YYYY-MM-DD-01-feature46.xml" relativeToChangelogFile="true"/>
+    <include file="YYYY-MM-DD-02-feature47.xml" relativeToChangelogFile="true"/>
     
     <changeSet  author="releaseTag" id="tagDatabaseVersion-3.1">  
         <tagDatabase  tag="3.1"/>  

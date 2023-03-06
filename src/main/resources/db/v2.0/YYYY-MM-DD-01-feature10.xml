@@ -18,6 +18,9 @@
                 <constraints  nullable="false"/>  
             </column>  
             <column  name="state"  type="char(2)"/>  
+            <column name="updated_at" type="timestamp without time zone" defaultValue="now()">
+                <constraints nullable="false"/>
+            </column>
         </createTable>  
     </changeSet>
 
