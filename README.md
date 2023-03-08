@@ -21,7 +21,10 @@ All  schema changes have a nested structure and are grouped in a common file db.
             └── db
                 ├── db.changelogs-root.xml
                 ├── seed
-                │   └── init_database_v1.sh
+                │   ├── city.csv
+                │   ├── country.csv
+                │   ├── countrylanguage.csv
+                │   └── init_database_v1.sh
                 ├── v1.0
                 │   ├── YYYY-MM-DD-01-changelog.xml
                 │   ├── YYYY-MM-DD-N-changelog.xml
