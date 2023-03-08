@@ -27,10 +27,10 @@ pipeline {
         loadEnvironmentVariablesFromFile(".env")
         if (env.env == 'LIVE'){
             env.DB_ENV = env.POSTGRES_PORT_LIVE
-            env.DB_CONTEXT == 'live'
+            env.DB_CONTEXT == "live"
         } else {
             env.DB_ENV = env.POSTGRES_PORT_DEV
-            env.DB_CONTEXT == 'dev'
+            env.DB_CONTEXT == "dev"
             }
         env.DB_VERSION = env.db_version
         env.DB_URL = "jdbc:postgresql://host.docker.internal:$DB_ENV/$POSTGRES_DB"
