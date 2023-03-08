@@ -30,7 +30,7 @@ CREATE TABLE country (
     headofstate text,
     capital integer,
     code2 character(2) NOT NULL,
-    CONSTRAINT country_continent_check CHECK ((((((((continent = 'Asia'::text) OR (continent = 'Europe'::text)) OR (continent = 'North America'::text)) OR (continent = 'Africa'::text)) OR (continent = 'Oceania'::text)) OR (continent = 'Antarctica'::text)) OR (continent = 'South America'::text)))
+    CONSTRAINT country_continent_check CHECK (continent in ('Asia','Europe','North America','Africa','Oceania','Antarctica','South America'))
 );
 
 CREATE TABLE countrylanguage (

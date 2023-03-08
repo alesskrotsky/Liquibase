@@ -7,13 +7,13 @@
                         http://www.liquibase.org/xml/ns/pro 
                         http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
     <!-- Should be only links changeSets for version 1.0 -->  
-    <include file="YYYY-MM-DD-01-init.xml" relativeToChangelogFile="true" />
+    <include file="YYYY-MM-DD-01-changelog.xml" relativeToChangelogFile="true" />
     
     <changeSet  author="releaseTag" id="tagDatabaseVersion-1.1"> 
         <tagDatabase tag="1.1"/>      
     </changeSet>
 
-    <include file="YYYY-MM-DD-02-init.xml" relativeToChangelogFile="true" /> 
+    <include file="YYYY-MM-DD-02-changelog.xml" relativeToChangelogFile="true" /> 
     
     <changeSet  author="releaseTag"  id="tagDatabaseVersion-1.2"> 
         <tagDatabase  tag="1.2"/>      

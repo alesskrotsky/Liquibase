@@ -27,8 +27,10 @@ pipeline {
         loadEnvironmentVariablesFromFile(".env")
         if (env.env == 'LIVE'){
             env.DB_ENV = env.POSTGRES_PORT_LIVE
+            env.DB_CONTEXT == 'live'
         } else {
             env.DB_ENV = env.POSTGRES_PORT_DEV
+            env.DB_CONTEXT == 'dev'
             }
         env.DB_VERSION = env.db_version
         env.DB_URL = "jdbc:postgresql://host.docker.internal:$DB_ENV/$POSTGRES_DB"
@@ -50,23 +52,23 @@ pipeline {
         script {
           if (env.action == 'update') {
             echo "------liquibase update------"
-            sh "liquibase --defaults-file=liquibase.properties --url=$DB_URL --username=$POSTGRES_USER --password=$POSTGRES_PASSWORD --driver=$LIQUIBASE_DRIVER update-sql"
-            sh "liquibase --defaults-file=liquibase.properties --url=$DB_URL --username=$POSTGRES_USER --password=$POSTGRES_PASSWORD --driver=$LIQUIBASE_DRIVER update"
+            sh "liquibase --defaults-file=liquibase.properties --url=$DB_URL --username=$POSTGRES_USER --password=$POSTGRES_PASSWORD --driver=$LIQUIBASE_DRIVER update-sql --contexts=$DB_CONTEXT"
+            sh "liquibase --defaults-file=liquibase.properties --url=$DB_URL --username=$POSTGRES_USER --password=$POSTGRES_PASSWORD --driver=$LIQUIBASE_DRIVER update --contexts=$DB_CONTEXT"
           }
           else if (env.action == 'update-to-tag') {
             echo "------liquibase update-to-tag------"
-            sh "liquibase --defaults-file=liquibase.properties --url=$DB_URL --username=$POSTGRES_USER --password=$POSTGRES_PASSWORD --driver=$LIQUIBASE_DRIVER update-to-tag-sql $DB_VERSION"
-            sh "liquibase --defaults-file=liquibase.properties --url=$DB_URL --username=$POSTGRES_USER --password=$POSTGRES_PASSWORD --driver=$LIQUIBASE_DRIVER update-to-tag $DB_VERSION"
+            sh "liquibase --defaults-file=liquibase.properties --url=$DB_URL --username=$POSTGRES_USER --password=$POSTGRES_PASSWORD --driver=$LIQUIBASE_DRIVER update-to-tag-sql $DB_VERSION --contexts=$DB_CONTEXT"
+            sh "liquibase --defaults-file=liquibase.properties --url=$DB_URL --username=$POSTGRES_USER --password=$POSTGRES_PASSWORD --driver=$LIQUIBASE_DRIVER update-to-tag $DB_VERSION --contexts=$DB_CONTEXT"
           }
           else if (env.action == 'rollback-to-tag') {
             echo "------liquibase rollback-to-tag------"
-            sh "liquibase --defaults-file=liquibase.properties --url=$DB_URL --username=$POSTGRES_USER --password=$POSTGRES_PASSWORD --driver=$LIQUIBASE_DRIVER rollback-sql --tag=$DB_VERSION"
-            sh "liquibase --defaults-file=liquibase.properties --url=$DB_URL --username=$POSTGRES_USER --password=$POSTGRES_PASSWORD --driver=$LIQUIBASE_DRIVER rollback --tag=$DB_VERSION"
+            sh "liquibase --defaults-file=liquibase.properties --url=$DB_URL --username=$POSTGRES_USER --password=$POSTGRES_PASSWORD --driver=$LIQUIBASE_DRIVER rollback-sql --tag=$DB_VERSION --contexts=$DB_CONTEXT"
+            sh "liquibase --defaults-file=liquibase.properties --url=$DB_URL --username=$POSTGRES_USER --password=$POSTGRES_PASSWORD --driver=$LIQUIBASE_DRIVER rollback --tag=$DB_VERSION --contexts=$DB_CONTEXT"
           }
           else {
             echo "------liquibase dry-run------"
-            sh "liquibase --defaults-file=liquibase.properties --url=$DB_URL --username=$POSTGRES_USER --password=$POSTGRES_PASSWORD --driver=$LIQUIBASE_DRIVER status --log-level=INFO"
-            sh "liquibase --defaults-file=liquibase.properties --url=$DB_URL --username=$POSTGRES_USER --password=$POSTGRES_PASSWORD --driver=$LIQUIBASE_DRIVER update-sql"
+            sh "liquibase --defaults-file=liquibase.properties --url=$DB_URL --username=$POSTGRES_USER --password=$POSTGRES_PASSWORD --driver=$LIQUIBASE_DRIVER status --contexts=$DB_CONTEXT --log-level=INFO"
+            sh "liquibase --defaults-file=liquibase.properties --url=$DB_URL --username=$POSTGRES_USER --password=$POSTGRES_PASSWORD --driver=$LIQUIBASE_DRIVER update-sql --contexts=$DB_CONTEXT"
           }
         }
       }

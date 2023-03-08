@@ -7,7 +7,7 @@
                         http://www.liquibase.org/xml/ns/pro 
                         http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
 
-    <changeSet  author="developer-3" id="8316711915-01" labels="update">
+    <changeSet  author="developer-3" id="8316711915-01" labels="feature10">
         <comment> Create a table named "testtable1".</comment>  
         <createTable  tableName="testtable1">  
             <column  name="id"  type="int"  autoIncrement="true">  
@@ -24,7 +24,7 @@
         </createTable>  
     </changeSet>
 
-    <changeSet author="developer-3" id="8316711915-02" labels="update">
+    <changeSet author="developer-3" id="8316711915-02" labels="feature10">
         <comment> Create a table named "testtable2".</comment>
         <createTable tableName="testtable2">
             <column name="id" type="int">

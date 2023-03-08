@@ -7,7 +7,7 @@
                         http://www.liquibase.org/xml/ns/pro 
                         http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
 
-    <changeSet  author="developer-1" id="375579741-01" labels="update">
+    <changeSet  author="developer-1" id="375579741-01" labels="feature30">
         <comment> Create a view.</comment>  
         <createView replaceIfExists="true"
             viewName="testview">
