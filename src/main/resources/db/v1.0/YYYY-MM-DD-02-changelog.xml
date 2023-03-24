@@ -14,11 +14,11 @@
         </addColumn>
     </changeSet>
 
-    <changeSet author="developer-2" id="2131856357-02" labels="feature4">
+    <!-- <changeSet author="developer-2" id="2131856357-02" labels="feature4">
         <comment> Create new index for "population" column.</comment>
         <createIndex indexName="test_index" tableName="country">
             <column name="population"/>
         </createIndex>
-    </changeSet>
+    </changeSet> -->
 
 </databaseChangeLog>
